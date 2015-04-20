@@ -8,7 +8,7 @@ class Link(models.Model):
 
     def __unicode__(self):
         return self.url
-    
+
 
 class Bookmark(models.Model):
     title = models.CharField(max_length=200)
