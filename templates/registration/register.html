@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %} 가입 페이지 {% endblock %}
+{% block head %} 가입하세요 {% endblock %}
+{% block content %}
+    <form action="." method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <input type="submit" value="가입"/>
+    </form>
+{% endblock %}
