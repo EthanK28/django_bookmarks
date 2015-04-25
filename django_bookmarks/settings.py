@@ -1,9 +1,13 @@
 # Django settings for django_bookmarks project.
 
 import os.path
+import django.contrib.auth
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+
+LOGIN_URL = "/login/";
+
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),

@@ -37,12 +37,21 @@ class RegistrationForm(forms.Form):
             return username
         raise forms.ValidationError('이미 사용 중인 사용자 이름입니다.')
 
-class BookmarkSaveFrom(forms.Form):
+class BookmarkSaveForm(forms.Form):
     url = forms.URLField(
         label='주소',
-        widget=forms.TextInput(attr={'size':64})
+        widget=forms.TextInput(attrs={'size':64})
         
     )
+    title = forms.CharField(
+        label='제목',
+        widget=forms.TextInput(attrs={'size': 40})
+    )
+    tags = forms.CharField(
+        label='태그',
+        required=False,
+        widget=forms.TextInput(attrs={'size':64})
 
-class save(forms.Form):
-    pass
+    )
+
+

@@ -19,6 +19,10 @@ urlpatterns = patterns('',
     (r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root':site_media}),
     (r'^register/$', register_page),
     (r'^register/success/$', TemplateView.as_view(template_name='registration/register_success.html')),
+    (r'^save/$', bookmark_save_page),
+    (r'^tag/([^\s]+)/$', tag_page),
+    (r'^tag/$', tag_cloud_page),
+
 )
 
 
