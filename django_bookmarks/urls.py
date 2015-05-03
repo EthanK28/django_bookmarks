@@ -1,3 +1,5 @@
+
+
 from django.conf.urls import patterns, include, url
 from bookmarks.views import *
 import os.path
@@ -13,6 +15,7 @@ site_media = os.path.join(
 
 urlpatterns = patterns('',
     (r'^$', main_page),
+    (r'^popular/$',popular_page),
     (r'^user/(\w+)/$', user_page),
     (r'^login/$','django.contrib.auth.views.login'),
     (r'^logout/$',logout_page),
@@ -24,6 +27,12 @@ urlpatterns = patterns('',
     (r'^tag/([^\s]+)/$', tag_page),
     (r'^tag/$', tag_cloud_page),
     (r'^search/$', search_page),
+
+    (r'^comments/', include('django.contrib.comments.urls')), #Comments
+
+    # View for comments
+    (r'^bookmark/(\d+)/$', bookmark_page),
+
 
 )
 

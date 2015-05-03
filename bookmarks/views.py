@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from datetime import datetime, timedelta
 
 from bookmarks.forms import *
 from bookmarks.models import *
@@ -56,9 +57,9 @@ def register_page(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             user = User.objects.create_user(
-                username=form.clean_data['username'],
-                password=form.clean_data['password1'],
-                email=form.clean_data['email']
+                username=form.cleaned_data['username'],
+                password=form.cleaned_data['password1'],
+                email=form.cleaned_data['email']
             )
             return HttpResponseRedirect('/register/success/')
     else:
@@ -216,6 +217,52 @@ def bookmark_vote_page(request):
         try:
             id = request.GET['id']
             shared_bookmark = SharedBookmark.objects.get(id=id)
+            user_voted = shared_bookmark.users_voted.filter(
+                username=request.user.username
+            )
+            if not user_voted:
+                shared_bookmark.votes +=1
+                shared_bookmark.users_voted.add(request.user)
+                shared_bookmark.save()
+        except ObjectDoesNotExist:
+            raise Http404('북마크를 찾을 수 없습니다.')
+
+    if request.META.has_key('HTTP_REFERER'):
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+    return HttpResponseRedirect('/')
+
+
+def popular_page(request):
+    today = datetime.today();
+    yesterday = today - timedelta(1)
+    shared_bookmarks = SharedBookmark.objects.filter(
+        date__gt=yesterday
+    )
+    shared_bookmarks = shared_bookmarks.order_by(
+        '-votes'
+    )[:10]
+
+    variables = RequestContext(request, {
+        'shared_bookmarks': shared_bookmarks
+    })
+
+    return render_to_response('popular_page.html', variables)
+
+
+def bookmark_page(request, bookmark_id):
+    shared_bookmark = get_object_or_404(
+        SharedBookmark,
+        id=bookmark_id
+    )
+
+    variables = RequestContext(request, {
+       'shared_bookmark': shared_bookmark
+    })
+
+    return render_to_response('bookmark_page.html', variables)
+
+                
 
 
 
