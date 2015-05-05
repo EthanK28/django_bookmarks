@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib import admin
+#from bookmarks.models import Link, Bookmark, Tag, SharedBookmark
 
 
 # Create your models here.
@@ -33,3 +35,11 @@ class SharedBookmark(models.Model):
 
     def __unicode__(self):
         return '%s, $s' % self.bookmark, self.votes
+
+class AdminBookmark(admin.ModelAdmin):
+    list_display = ("link", )
+
+admin.site.register(Bookmark, AdminBookmark, )
+admin.site.register(Link, )
+admin.site.register(Tag, )
+admin.site.register(SharedBookmark, )

@@ -4,6 +4,8 @@ from django.conf.urls import patterns, include, url
 from bookmarks.views import *
 import os.path
 from django.views.generic.base import TemplateView
+from django.contrib import admin
+admin.autodiscover()
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -32,6 +34,9 @@ urlpatterns = patterns('',
 
     # View for comments
     (r'^bookmark/(\d+)/$', bookmark_page),
+
+    #Admin
+    (r'^admin/', include(admin.site.urls)),
 
 
 )
