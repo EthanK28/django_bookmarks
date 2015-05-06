@@ -4,8 +4,8 @@ import os.path
 from django.views.generic.base import TemplateView
 
 # Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
+from django.contrib import admin
+admin.autodiscover()
 
 site_media = os.path.join(
     os.path.abspath(os.path.dirname(__name__)), 'site_media'
@@ -24,6 +24,8 @@ urlpatterns = patterns('',
     (r'^tag/([^\s]+)/$', tag_page),
     (r'^tag/$', tag_cloud_page),
     (r'^search/$', search_page),
+    (r'admin/', include(admin.site.urls)),
+
 
 )
 
