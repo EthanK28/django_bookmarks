@@ -20,6 +20,9 @@ class Bookmark(models.Model):
     def __unicode__(self):
         return '%s %s' % (self.user.username, self.link.url)
 
+    def get_abosolute_url(self):
+        return self.link.url
+
 class Tag(models.Model):
     name = models.CharField(max_length=64, unique=True)
     bookmarks = models.ManyToManyField(Bookmark)

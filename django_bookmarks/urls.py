@@ -1,7 +1,10 @@
+
+
 from django.conf.urls import patterns, include, url
 from bookmarks.views import *
 import os.path
 from django.views.generic.base import TemplateView
+from bookmarks.feeds import *
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -10,6 +13,10 @@ admin.autodiscover()
 site_media = os.path.join(
     os.path.abspath(os.path.dirname(__name__)), 'site_media'
 )
+
+feeds = {
+        'recent': RecentBookmarks
+}
 
 urlpatterns = patterns('',
     (r'^$', main_page),
@@ -25,6 +32,9 @@ urlpatterns = patterns('',
     (r'^tag/$', tag_cloud_page),
     (r'^search/$', search_page),
     (r'admin/', include(admin.site.urls)),
+    #feed
+    (r'^feeds/(?P<url>.*)/$','django.contrib.syndication.views.feed',
+     {'feed_dict':feeds}),
 
 
 )
