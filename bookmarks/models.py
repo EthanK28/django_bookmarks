@@ -39,6 +39,7 @@ class SharedBookmark(models.Model):
 class AdminBookmark(admin.ModelAdmin):
     list_display = ("link", )
 
+
 admin.site.register(Bookmark, AdminBookmark, )
 admin.site.register(Link, )
 admin.site.register(Tag, )
